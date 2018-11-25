@@ -109,7 +109,7 @@ In BeerApplication:
 			
 			br.findAll().forEach(System.out::println);
 		};
-    template.opsForValue().set("count", String.valueOf(br.count()));
+    		template.opsForValue().set("count", String.valueOf(br.count()));
 	}
 ```
 
@@ -127,26 +127,36 @@ class BeerGreeting {
 
 	@Autowired
 	Environment env;
-	
-  @Autowired
-  BeerRepository br;
+
+	@Autowired
+	BeerRepository br;
 
 	@GetMapping("/greeting")
-	String greeting(){
-  		Random rand = new Random();
-		
+	String greeting() {
+		Random rand = new Random();
+
 		Integer count = template.opsForValue().get("count");
-		if (count == null) {
-			count = Math.toIntExact(br.count());
-			template.opsForValue().set("count", count);
-		}
-				
+
 		Long beerIndex = Long.valueOf(rand.nextInt(count) + 1);
 
 		log.info("Returning greeting from service...");
-		return "Greetings from Open Cloud Summit! I am instance " + env.getProperty("CF_INSTANCE_INDEX") 
-		+ "\nHave a beer: " + br.findById(beerIndex).get().getName();
+		
+		simulateLoad();
+		
+		return "Greetings from Open Cloud Summit! I am instance "  
+				+ env.getProperty("CF_INSTANCE_INDEX") + "\nHave a beer: "
+				+ br.findById(beerIndex).get().getName();
 	}
+	
+	private void simulateLoad() {
+		// Creation
+		FakeLoad fakeload = FakeLoads.create().lasting(2, TimeUnit.SECONDS).withCpu(50);
+
+		// Execution
+		FakeLoadExecutor executor = FakeLoadExecutors.newDefaultExecutor();
+		executor.execute(fakeload);
+	}
+
 }
 ```
 Add to pom.xml:
@@ -162,23 +172,7 @@ Add to pom.xml:
 			<version>0.4.0</version>
 		</dependency>
 
-Create method in BeerGreeting:
 
-lload
-------
-
-		simulateLoad();
-
-		private void simulateLoad() {
-			// Creation
-			FakeLoad fakeload = FakeLoads.create()
-			    .lasting(2, TimeUnit.SECONDS)
-			    .withCpu(50);
-			 
-			// Execution
-			FakeLoadExecutor executor = FakeLoadExecutors.newDefaultExecutor(); 
-			executor.execute(fakeload);
-		}
 
 
 
