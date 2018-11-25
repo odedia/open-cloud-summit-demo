@@ -7,8 +7,10 @@ Open Cloud Summit
 ------------------------------
 
 start.spring.io
+
 project name: beer-service
 
+```
 Web
 Actuator
 HATEOAS
@@ -18,6 +20,7 @@ H2
 MySQL
 Lombok
 Redis
+```
 
 ggreeting
 ---------
