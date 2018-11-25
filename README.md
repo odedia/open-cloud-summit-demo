@@ -21,7 +21,7 @@ Redis
 
 ggreeting
 ---------
-
+```
 @RestController
 @Slf4j
 class BeerGreeting {
@@ -35,6 +35,7 @@ class BeerGreeting {
 		return "Greetings from Open Cloud Summit! I am instance #" + env.getProperty("CF_INSTANCE_INDEX");
 	}
 }
+```
 
 # Part 2 - cf push
 ------------------------------
@@ -63,7 +64,7 @@ spring.jpa.generate-ddl=true
 
 bbeer
 ------
-
+```
 @Entity
 @Data
 @NoArgsConstructor
@@ -75,22 +76,22 @@ class Beer {
 	private String name;
 	private Double price;
 }
-
+```
 
 rrepo
 ------
-
+```
 @RepositoryRestResource(path = "beers")
 interface BeerRepository extends JpaRepository<Beer, Long> {
 
 }
-
+```
 rrunner
 -------
 
 In BeerApplication:
 
-	@Autowired
+```	@Autowired
 	private RedisTemplate<String, String> template;
 
 
@@ -107,12 +108,14 @@ In BeerApplication:
 		};
     template.opsForValue().set("count", String.valueOf(br.count()));
 	}
-
+```
 
 Replace greeting:
 
 greett
+------
 
+```
 @RestController
 @Slf4j
 class BeerGreeting {
@@ -142,7 +145,7 @@ class BeerGreeting {
 		+ "\nHave a beer: " + br.findById(beerIndex).get().getName();
 	}
 }
-
+```
 Add to pom.xml:
 
 lload
@@ -156,7 +159,7 @@ Add to pom.xml:
 			<version>0.4.0</version>
 		</dependency>
 
-Create mathod in BeerGreeting:
+Create method in BeerGreeting:
 
 lload
 ------
