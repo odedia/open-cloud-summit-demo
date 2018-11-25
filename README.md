@@ -182,6 +182,7 @@ Create manifest.yml:
 applications:
 - name: beer-service
   path: target/beer-service-0.0.1-SNAPSHOT.jar
+  instances: 2
   services:
   - mysql
   - redis
