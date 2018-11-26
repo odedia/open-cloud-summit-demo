@@ -87,6 +87,7 @@ rrepo
 interface BeerRepository extends JpaRepository<Beer, Long> {
 
 }
+```
 
 Replace greeting:
 
@@ -158,10 +159,6 @@ In BeerApplication:
     		template.opsForValue().set("count", String.valueOf(br.count()));
 	}
 ```
-
-
-```
-Add to pom.xml:
 
 lload
 ------
