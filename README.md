@@ -13,7 +13,6 @@ project name: beer-service
 ```
 Web
 Actuator
-HATEOAS
 Rest Repositories
 JPA
 H2
