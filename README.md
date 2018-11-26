@@ -87,30 +87,6 @@ rrepo
 interface BeerRepository extends JpaRepository<Beer, Long> {
 
 }
-```
-rrunner
--------
-
-In BeerApplication:
-
-```	@Autowired
-	private RedisTemplate<String, String> template;
-
-
-	@Bean
-	CommandLineRunner runner(BeerRepository br){
-		return args -> {
-			if (br.count() > 0) return;
-
-			Arrays.asList("")
-			
-			.forEach(x -> br.save(new Beer(null, x, 10.0)));
-			
-			br.findAll().forEach(System.out::println);
-		};
-    		template.opsForValue().set("count", String.valueOf(br.count()));
-	}
-```
 
 Replace greeting:
 
@@ -157,6 +133,33 @@ class BeerGreeting {
 	}
 
 }
+
+```
+rrunner
+-------
+
+In BeerApplication:
+
+```	@Autowired
+	private RedisTemplate<String, String> template;
+
+
+	@Bean
+	CommandLineRunner runner(BeerRepository br){
+		return args -> {
+			if (br.count() > 0) return;
+
+			Arrays.asList("")
+			
+			.forEach(x -> br.save(new Beer(null, x, 10.0)));
+			
+			br.findAll().forEach(System.out::println);
+		};
+    		template.opsForValue().set("count", String.valueOf(br.count()));
+	}
+```
+
+
 ```
 Add to pom.xml:
 
